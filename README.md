@@ -34,6 +34,7 @@ with a visual of those objects stored.
 #### Data available appearance
 <img src="https://raw.githubusercontent.com/ej020586/SGT/assets/assets/students.jpg?token=AI9hkL6FrCNwA4sCd5lospYmoXhix2Pgks5VxSevwA%3D%3D" width="500"/>
 
+
 ### Assignments - A.K.A criteria for success on this version of the project
 1. Choose a Lead developer among your paired programming team
     1. Lead developer should fork <a href="https://github.com/Learning-Fuze/SGT">SGT</a> repo
