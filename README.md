@@ -7,7 +7,12 @@ from the DOM only after we have successfully remove the object from the array.
 ### Scope
 - JS Functionality
     - Add click handler to the dynamically created delete button per row
-    - Delete button click handler should call a removeStudentByIndex function that removes the object in the student_array by a index parameter
+    - Delete button click handler should call a removeStudent function that removes the object in the student_array
+        - Suggested methods
+            - Using index of the row of the current button to remove from array
+            - Store the index when adding to the DOM into a data attribute
+            - Most Advanced - Store DOM element that is dynamically created into the student object
+                - have a delete method within the student object that would be called to remove the element from the DOM and soft delete from the array
     - Once the object has been removed from the array the DOM element row that the delete button resides in should be removed.
 
 ### Assignments - A.K.A criteria for success on this version of the project
