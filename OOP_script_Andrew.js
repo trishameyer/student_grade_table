@@ -54,6 +54,7 @@ var School = function(){
             student.delete_self();
             console.log(school1.student_body);
             $(student.Element).remove();
+            school1.calculate_avg();
 
 
         });
