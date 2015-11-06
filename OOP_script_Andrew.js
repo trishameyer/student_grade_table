@@ -2,20 +2,31 @@ $(document).ready(function(){
    //var school1 = new School();
     console.log('loaded');
 });
-
+var alerted=false;
 var School = function(){
     this.student_body = [];
     this.get_student_info = function(){
-        var Name = $('#studentName').val();
-        var Course = $('#course').val();
-        var Grade = $('#studentGrade').val();
-        var student = new Student();
-        student.init_self(Name,Course,Grade);
-        this.student_body.push(student);
-        console.log(this.student_body);
-        this.add_student_to_table(student);
-        this.clear_student_form();
-        this.calculate_avg();
+            var Name = $('#studentName').val();
+            var Course = $('#course').val();
+            var Grade = $('#studentGrade').val();
+            var student = new Student();
+            student.init_self(Name, Course, Grade);
+        if (!(student.Name === '' || student.Course === '' || student.Grade === '')) {
+            this.student_body.push(student);
+            console.log(this.student_body);
+            this.add_student_to_table(student);
+            this.clear_student_form();
+            this.calculate_avg();
+            $('#alert_msg').remove();
+            alerted=false;//removes alert message and sets it to false
+        }
+        else if(!alerted) {
+            var alert_text = $('<div>').text('Alert: Please enter form data before continuing');
+            $(alert_text).css('color', 'red').css('margin-top', '5%').attr('id', 'alert_msg');
+            $('.student-add-form').append(alert_text);
+            alerted = true;//prevents repeat alert messages
+            if (debug)console.log('else initiated');
+        }
 
     };
     this.clear_student_form = function(){
@@ -24,6 +35,7 @@ var School = function(){
             $(inputIds[i]).val('');
         }
         $('#alert_msg').remove();
+        alerted=false;
     };
     this.calculate_avg = function(){
         var sum=0;
@@ -41,6 +53,8 @@ var School = function(){
         this.student_body = [];
         $('tbody').empty();
         this.calculate_avg();
+        $('#alert_msg').remove();
+        alerted=false;
         //$('#alert_msg').remove();
     };
     this.add_student_to_table = function(student) {
