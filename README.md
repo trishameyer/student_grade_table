@@ -39,6 +39,6 @@ Version 1.0 picks up where 0.5 left off. You will now be populating records from
     - Add a click handler to your newly created button
         - Using the LearningFuze SGT API pull records from the DB using an AJAX call
         - With the object you get back from the API find the proper data to add to your SGT
-    - API URL: 
+    - API URL: `s-apis.learningfuze.com/sgt/get`
     - <a href="https://github.com/Learning-Fuze/project-apis/blob/master/sgt/README.md#get-functions" target="_target">SGT API Info</a> 
     - **Reminder:** for this version you will only be using the `student_get_all()` function
