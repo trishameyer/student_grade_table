@@ -2,6 +2,7 @@ $(document).ready(function(){
    //var school1 = new School();
     console.log('loaded');
 });
+var ajax_obj;
 var alerted=false;
 var School = function(){
     this.student_body = [];
@@ -59,9 +60,9 @@ var School = function(){
     };
     this.add_student_to_table = function(student) {
         var table_row = $('<tr>');
-        var td_name = $('<td>').text(student.Name);
-        var td_course = $('<td>').text(student.Course);
-        var td_grade = $('<td>').text(student.Grade);
+        var td_name = $('<td>').text(student.name);
+        var td_course = $('<td>').text(student.course);
+        var td_grade = $('<td>').text(student.grade);
         var td_operations = $('<td>');
         var operations_button = $('<button>Delete</button>').addClass('btn btn-danger').attr("id","delete_tr");
         $(table_row).on('click','#delete_tr',function(){
@@ -114,12 +115,18 @@ var school1 = new School();
 
 function populate_DOM_from_database(){
     $.ajax({
+
         dataType:'json',
         data:{api_key:'63FaOtLyZx'},
         method:'POST',
-        url:'https://s-apis.learningfuze.com/sgt/get',
-        success:function(){
-            console.log('successful');
+        url:'http://s-apis.learningfuze.com/sgt/get',
+        success:function(result){
+            ajax_obj=result;
+            console.log(result);
+            for(var i=0;i<result.data.length;i++){
+                school1.add_student_to_table(result.data[i]);
+
+            }
         }
     })
 
