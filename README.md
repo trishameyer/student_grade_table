@@ -34,11 +34,15 @@ Version 1.0 picks up where 0.5 left off. You will now be populating records from
 > - HTML
     - In the index.html file add a third button below the add and cancel buttons
         - Make sure the button has the same styling as the other two and fits in with the overall design
-        - The button should say something along the lines of "Populate From DB"
+        - The button should say something along the lines of "Get data From Server"
 > - JS Functionality
     - Add a click handler to your newly created button
         - Using the LearningFuze SGT API pull records from the DB using an AJAX call
         - With the object you get back from the API find the proper data to add to your SGT
     - API URL: `s-apis.learningfuze.com/sgt/get`
-    - <a href="https://github.com/Learning-Fuze/project-apis/blob/master/sgt/README.md#get-functions" target="_target">SGT API Info</a> 
-    - **Reminder:** for this version you will only be using the `student_get_all()` function
+        - input:
+            api_key: (string) your api key
+        - output:
+            success: (boolean) whether the operation succeeded
+            data: (array) every student available on the database
+    
