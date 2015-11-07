@@ -112,3 +112,16 @@ var Student = function(){
 
 var school1 = new School();
 
+function populate_DOM_from_database(){
+    $.ajax({
+        dataType:'json',
+        data:{api_key:'63FaOtLyZx'},
+        method:'POST',
+        url:'https://s-apis.learningfuze.com/sgt/get',
+        success:function(){
+            console.log('successful');
+        }
+    })
+
+}
+
