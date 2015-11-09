@@ -7,21 +7,21 @@ Version 2.0 adds more CRUD functionality.  Previously you added R (Read), and no
   - delete an existing student from the database.  This should build off your existing delete functionality.  Remember to take into account a useful User Experience when planning out how to tie in the delete functionality.
 
 ## Getting Started
-> - Do you have the latest changes on your v1.0 branch?
+> - Do you have the latest changes on your master branch?
     - **No** - talk with an instructor
     - **I don't know** - talk with an instructor
     - **Yes** - Move on to Pull Latest Changes
-> - Are you on your v1.0 branch?
+> - Are you on your master branch?
     - **Yes** - continue to "Pull Latest Changes"
     - **I dont know** Run the command below
         - `git branch` - this will highlight the branch you are currently on
-    - **No** - Make sure you `git add .` and `git commit` to your current branch before you switch to your v.5 branch
+    - **No** - Make sure you `git add .` and `git commit` to your current branch before you switch to your master branch
 > - Pull Latest Changes
-        - `git checkout v1.0`
-        - `git pull origin v1.0`
-> - Create a the feature branch
+        - `git checkout master`
+        - `git pull origin master`
+> - Create the new feature branch
     - `git checkout -b v2.0`
-> - Work on the scope defined <a href="https://github.com/Learning-Fuze/SGT/tree/v1.0#scope">Below</a>
+> - Work on the scope defined <a href="https://github.com/Learning-Fuze/SGT/tree/v2.0#scope">Below</a>
 > - Add files to git
     - `git add .`
 > - Commit files (Group files together)
