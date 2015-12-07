@@ -9,7 +9,7 @@ For your challenge, you were required to make a database schema for SGT.  Now yo
 - CREATE - Create the backend call that handles "create" operations like  <a href="https://github.com/Learning-Fuze/SGT/tree/v2.0#scope" target="_blank">SGT 2.0 Create</a>
 - DELETE - Create the backend call that handles "delete" operations like  <a href="https://github.com/Learning-Fuze/SGT/tree/v2.0#scope" target="_blank">SGT 2.0 Delete</a>
 - EXTRA CREDIT:
-  - Create the auto-complete functionality
+  - Create the auto-complete functionality similar to the auto-complete functionality here:
     - url: s-apis.learningfuze.com/sgt/courses
     - method: post
     - input: 
