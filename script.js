@@ -91,7 +91,7 @@ function updateStudentList(){
  * @param studentObj
  */
 function addStudentToDom(studentObj){
-        $('.student-list tbody').append('<tr><td>' + studentObj.name + '</td><td>' + studentObj.course + '</td><td>' + studentObj.grade +'</td></tr>');
+        $('.student-list tbody').append('<tr><td>' + studentObj.name + '</td><td>' + studentObj.course + '</td><td>' + studentObj.grade +'</td><td><button class="btn-danger">Delete</button></td></tr>');
 }
 
 /**
