@@ -30,7 +30,6 @@ Version 1.0 picks up where 0.5 left off. You will now be populating records from
 ## Version 2.0
 #### Description
 Version 2.0 adds more CRUD functionality.  Previously you added R (Read), and now you will be adding Create and Delete functionality. You will now be adding records to a database via the LearningFuze SGT API.
-=======
 
 
 
