@@ -100,7 +100,26 @@ function updateStudentList(){
  * @param studentObj
  */
 function addStudentToDom(studentObj){ //appends student object data to the DOM and adds a delete button
-        $('.student-list tbody').append('<tr><td>' + studentObj.name + '</td><td>' + studentObj.course + '</td><td>' + studentObj.grade +'</td><td><button class="btn btn-danger">Delete</button></td></tr>');
+    var studentRow = $('<tr>');
+    var studentName = $('<td>', {
+        text: studentObj.name
+    });
+    var studentCourse = $('<td>',{
+       text:studentObj.course
+    });
+    var studentGrade = $('<td>',{
+        text:studentObj.grade
+    });
+    var deleteButton = $('<button>',{
+        class:"btn btn-danger",
+        text:"Delete"
+    });
+    deleteButton.on('click',function(){
+       console.log('my element is ',studentObj.element);
+    });
+    $('tbody').append(studentRow);
+    studentRow.append(studentName, studentCourse, studentGrade, deleteButton);
+    studentObj.element = studentRow;
 }
 
 /**
