@@ -55,6 +55,13 @@ function clearAddStudentForm(){
  * @returns {number}
  */
 function calculateAverage(){
+    var runningGradeAverage=0;
+    var finalAverage=0;
+    for(i=0;i<student_array.length;i++){
+        runningGradeAverage+=student_array[i].grade;
+    }
+    finalAverage=runningGradeAverage/student_array.length-1;
+    return finalAverage;
 
 }
 
