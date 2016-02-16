@@ -24,7 +24,9 @@ function addClicked(){
  * cancelClicked - Event Handler when user clicks the cancel button, should clear out student form
  */
 function cancelClicked(){
-
+    $('#studentName').val("");
+    $('#course').val("");
+    $('#studentGrade').val("");
 }
 
 /**
