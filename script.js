@@ -33,7 +33,12 @@ function cancelClicked(){
  * @return undefined
  */
 function addStudent(){
-
+    var student= {
+        name: $('#studentName').val(),
+        course: $('#course').val(),
+        grade: $('#studentGrade').val()
+    }
+    student_array.push(student);
 }
 
 /**
@@ -84,6 +89,3 @@ function reset(){
 /**
  * Listen for the document to load and reset the data to the initial state
  */
-$(document).ready(function(){
-
-})
