@@ -18,6 +18,7 @@ var inputIds = ['#studentName','#course','#studentGrade'];
  */
 function addClicked(){
     addStudent();
+    clearAddStudentForm();
 }
 
 /**
@@ -37,7 +38,7 @@ function addStudent(){
         name: $('#studentName').val(),
         course: $('#course').val(),
         grade: $('#studentGrade').val()
-    }
+    };
     student_array.push(student);
 }
 
@@ -46,7 +47,7 @@ function addStudent(){
  */
 function clearAddStudentForm(){
     for(i=0;i<inputIds.length;i++){
-        $(i).val("");
+        $(inputIds[i]).val("");
     }
 }
 
@@ -58,9 +59,9 @@ function calculateAverage(){
     var runningGradeAverage=0;
     var finalAverage=0;
     for(i=0;i<student_array.length;i++){
-        runningGradeAverage+=student_array[i].grade;
+        runningGradeAverage+=Number(student_array[i].grade);
     }
-    finalAverage=runningGradeAverage/student_array.length-1;
+    finalAverage=runningGradeAverage/student_array.length;
     return finalAverage;
 
 }
@@ -69,7 +70,8 @@ function calculateAverage(){
  * updateData - centralized function to update the average and call student list update
  */
 function updateData(){
-
+    $('.avgGrade').text(calculateAverage()); //updates .avgGrade text by calling the calculateAverage() function
+    updateStudentList();  //calls updateStudentList()
 }
 
 /**
@@ -84,15 +86,16 @@ function updateStudentList(){
  * into the .student_list tbody
  * @param studentObj
  */
-function addStudentToDom(){
+function addStudentToDom(studentObj){
 
 }
 
 /**
  * reset - resets the application to initial state. Global variables reset, DOM get reset to initial load state
  */
-function reset(){
-
+function reset(){ //not finished here
+    clearAddStudentForm();
+    student_array=[];
 }
 
 /**
