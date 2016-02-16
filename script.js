@@ -19,6 +19,7 @@ var inputIds = ['#studentName','#course','#studentGrade'];
 function addClicked(){
     addStudent();
     clearAddStudentForm();
+    updateData();
 }
 
 /**
@@ -78,7 +79,10 @@ function updateData(){
  * updateStudentList - loops through global student array and appends each objects data into the student-list-container > list-body
  */
 function updateStudentList(){
-
+    $('.student-list tbody').empty();
+    for(i=0;i<student_array.length;i++){
+        addStudentToDom(student_array[i]);
+    }
 }
 
 /**
@@ -87,7 +91,7 @@ function updateStudentList(){
  * @param studentObj
  */
 function addStudentToDom(studentObj){
-
+        $('.student-list tbody').append('<tr><td>' + studentObj.name + '</td><td>' + studentObj.course + '</td><td>' + studentObj.grade +'</td></tr>');
 }
 
 /**
@@ -96,6 +100,7 @@ function addStudentToDom(studentObj){
 function reset(){ //not finished here
     clearAddStudentForm();
     student_array=[];
+    updateData();
 }
 
 /**
