@@ -11,22 +11,20 @@ var student_array=[];
  * inputIds - id's of the elements that are used to add students
  * @type {string[]}
  */
-var inputIds = {};
+var inputIds = ['#studentName','#course','#studentGrade'];
 
 /**
  * addClicked - Event Handler when user clicks the add button
  */
 function addClicked(){
-
+    addStudent();
 }
 
 /**
  * cancelClicked - Event Handler when user clicks the cancel button, should clear out student form
  */
 function cancelClicked(){
-    $('#studentName').val("");
-    $('#course').val("");
-    $('#studentGrade').val("");
+    clearAddStudentForm();
 }
 
 /**
@@ -47,7 +45,9 @@ function addStudent(){
  * clearAddStudentForm - clears out the form values based on inputIds variable
  */
 function clearAddStudentForm(){
-
+    for(i=0;i<inputIds.length;i++){
+        $(i).val("");
+    }
 }
 
 /**
