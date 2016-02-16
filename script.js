@@ -59,10 +59,15 @@ function clearAddStudentForm(){
 function calculateAverage(){
     var runningGradeAverage=0;
     var finalAverage=0;
-    for(i=0;i<student_array.length;i++){
-        runningGradeAverage+=Number(student_array[i].grade);
+    if(student_array.length==0){
+        return 0;
+    }else {
+        for(i=0;i<student_array.length;i++){
+            runningGradeAverage+=Number(student_array[i].grade);
+        }
+        finalAverage=runningGradeAverage/student_array.length;
     }
-    finalAverage=runningGradeAverage/student_array.length;
+
     return finalAverage;
 
 }
@@ -80,8 +85,12 @@ function updateData(){
  */
 function updateStudentList(){
     $('.student-list tbody').empty();
-    for(i=0;i<student_array.length;i++){
-        addStudentToDom(student_array[i]);
+    if (student_array.length == 0){
+        $('.student-list tbody').append('<td colspan="2"><h4>User Info Unavailable</h4></td>')
+    }else{
+        for(i=0;i<student_array.length;i++){
+            addStudentToDom(student_array[i]);
+        }
     }
 }
 
@@ -106,3 +115,6 @@ function reset(){ //not finished here
 /**
  * Listen for the document to load and reset the data to the initial state
  */
+$(document).ready(function(){
+    reset();
+})
