@@ -17,16 +17,16 @@ var inputIds = ['#studentName','#course','#studentGrade'];
  * addClicked - Event Handler when user clicks the add button
  */
 function addClicked(){
-    addStudent();
-    clearAddStudentForm();
-    updateData();
+    addStudent();  //calls addstudent()
+    clearAddStudentForm(); //calls clearAddStudentForm()
+    updateData(); //calls updateData()
 }
 
 /**
  * cancelClicked - Event Handler when user clicks the cancel button, should clear out student form
  */
 function cancelClicked(){
-    clearAddStudentForm();
+    clearAddStudentForm(); //calls clearAddstudentForm()
 }
 
 /**
@@ -36,11 +36,11 @@ function cancelClicked(){
  */
 function addStudent(){
     var student= {
-        name: $('#studentName').val(),
-        course: $('#course').val(),
-        grade: $('#studentGrade').val()
+        name: $('#studentName').val(),   //creates an object variable with property called name
+        course: $('#course').val(),      //property called course
+        grade: $('#studentGrade').val()  //and property called grade
     };
-    student_array.push(student);
+    student_array.push(student);         //pushes the student object into the student_array
 }
 
 /**
@@ -48,7 +48,7 @@ function addStudent(){
  */
 function clearAddStudentForm(){
     for(i=0;i<inputIds.length;i++){
-        $(inputIds[i]).val("");
+        $(inputIds[i]).val("");  //for loop runs through the inputId's array and resets their input values to an empty string
     }
 }
 
@@ -57,18 +57,18 @@ function clearAddStudentForm(){
  * @returns {number}
  */
 function calculateAverage(){
-    var runningGradeAverage=0;
-    var finalAverage=0;
+    var runningGradeAverage=0; //creates a variable called runningGradeAverage
+    var finalAverage=0;        // creates a variable called finalAverage
     if(student_array.length==0){
-        return 0;
+        return 0;              // if there is nothing in the student array, return 0
     }else {
         for(i=0;i<student_array.length;i++){
-            runningGradeAverage+=Number(student_array[i].grade);
+            runningGradeAverage+=Number(student_array[i].grade); //if there is something inside the student array, the running grade average gets the value of student[i].grade added to it
         }
-        finalAverage=runningGradeAverage/student_array.length;
+        finalAverage=runningGradeAverage/student_array.length; //after the loop the running grade average gets divided by the studentArray.length
     }
 
-    return finalAverage;
+    return finalAverage;  //returns the final average for display
 
 }
 
@@ -84,12 +84,12 @@ function updateData(){
  * updateStudentList - loops through global student array and appends each objects data into the student-list-container > list-body
  */
 function updateStudentList(){
-    $('.student-list tbody').empty();
+    $('.student-list tbody').empty(); //empties tbody so updateStudentList starts with a fresh screen --used to prevent multiple entries when adding students
     if (student_array.length == 0){
-        $('.student-list tbody').append('<td colspan="2"><h4>User Info Unavailable</h4></td>')
+        $('.student-list tbody').append('<td colspan="2"><h4>User Info Unavailable</h4></td>') // if studentArray is empty, display a no students message
     }else{
         for(i=0;i<student_array.length;i++){
-            addStudentToDom(student_array[i]);
+            addStudentToDom(student_array[i]); //loops through the student array and calls addStudentToDom for each student
         }
     }
 }
@@ -99,21 +99,21 @@ function updateStudentList(){
  * into the .student_list tbody
  * @param studentObj
  */
-function addStudentToDom(studentObj){
+function addStudentToDom(studentObj){ //appends student object data to the DOM and adds a delete button
         $('.student-list tbody').append('<tr><td>' + studentObj.name + '</td><td>' + studentObj.course + '</td><td>' + studentObj.grade +'</td><td><button class="btn-danger">Delete</button></td></tr>');
 }
 
 /**
  * reset - resets the application to initial state. Global variables reset, DOM get reset to initial load state
  */
-function reset(){ //not finished here
-    student_array=[];
-    updateData();
+function reset(){
+    student_array=[]; //resets the student array
+    updateData();     //runs update data
 }
 
 /**
  * Listen for the document to load and reset the data to the initial state
  */
 $(document).ready(function(){
-    reset();
-})
+    reset(); //calls reset onload
+});
