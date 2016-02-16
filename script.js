@@ -107,7 +107,6 @@ function addStudentToDom(studentObj){
  * reset - resets the application to initial state. Global variables reset, DOM get reset to initial load state
  */
 function reset(){ //not finished here
-    clearAddStudentForm();
     student_array=[];
     updateData();
 }
