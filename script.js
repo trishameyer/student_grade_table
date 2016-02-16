@@ -86,7 +86,7 @@ function updateData(){
 function updateStudentList(){
     $('.student-list tbody').empty(); //empties tbody so updateStudentList starts with a fresh screen --used to prevent multiple entries when adding students
     if (student_array.length == 0){
-        $('.student-list tbody').append('<td colspan="2"><h4>User Info Unavailable</h4></td>') // if studentArray is empty, display a no students message
+        $('.student-list tbody').append('<td colspan="2"><h4>User Info Unavailable</h4></td>'); // if studentArray is empty, display a no students message
     }else{
         for(i=0;i<student_array.length;i++){
             addStudentToDom(student_array[i]); //loops through the student array and calls addStudentToDom for each student
@@ -100,7 +100,7 @@ function updateStudentList(){
  * @param studentObj
  */
 function addStudentToDom(studentObj){ //appends student object data to the DOM and adds a delete button
-        $('.student-list tbody').append('<tr><td>' + studentObj.name + '</td><td>' + studentObj.course + '</td><td>' + studentObj.grade +'</td><td><button class="btn-danger">Delete</button></td></tr>');
+        $('.student-list tbody').append('<tr><td>' + studentObj.name + '</td><td>' + studentObj.course + '</td><td>' + studentObj.grade +'</td><td><button class="btn btn-danger">Delete</button></td></tr>');
 }
 
 /**
