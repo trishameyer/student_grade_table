@@ -36,21 +36,43 @@ function cancelClicked(){
  *
  * @return undefined
  */
-function addStudent(){
+function addStudent() {
     var arrayIndex = student_array.length;
-    var student= {
+    var student = {
         name: $('#studentName').val(),   //creates an object variable with property called name
         course: $('#course').val(),      //property called course
         grade: $('#studentGrade').val(),  //and property called grade
         arrayIndex: arrayIndex,
         element: null,
-        delete_self : function(){
+        delete_self: function () {
             this.element.remove();
-            student_array.splice(this.arrayIndex,1);
+            student_array.splice(this.arrayIndex, 1);
             changeIndex(this.arrayIndex);
         }
+
+
     };
-    student_array.push(student);         //pushes the student object into the student_array
+    student_array.push(student);
+    checkHighestGrade(student.grade);
+
+
+            //pushes the student object into the student_array
+}
+var highestGrade = null;
+var lowestGrade = null;
+function checkHighestGrade(student_grade){
+    if (highestGrade == null){
+        highestGrade = student_grade;
+        lowestGrade = student_grade;
+        console.log('HG: '+highestGrade, 'LG: '+lowestGrade);
+    }else if (student_grade > highestGrade) {
+        //lowestGrade = highestGrade;
+        highestGrade = student_grade;
+        console.log('HG: '+highestGrade, 'LG: '+lowestGrade);
+    }else if (student_grade < lowestGrade){
+        lowestGrade = student_grade;
+        console.log('HG: '+highestGrade, 'LG: '+lowestGrade);
+    }
 }
 
 /*
@@ -85,7 +107,7 @@ function calculateAverage(){
         for(i=0;i<student_array.length;i++){
             runningGradeAverage+=Number(student_array[i].grade); //if there is something inside the student array, the running grade average gets the value of student[i].grade added to it
         }
-        finalAverage=runningGradeAverage/student_array.length; //after the loop the running grade average gets divided by the studentArray.length
+        finalAverage=parseInt(runningGradeAverage/student_array.length); //after the loop the running grade average gets divided by the studentArray.length
     }
 
     return finalAverage;  //returns the final average for display
