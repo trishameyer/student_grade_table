@@ -6,7 +6,7 @@
  * @type {Array}
  */
 var student_array=[];
-var courseList = {};
+var courseList = {}; //This object is created to store the course names from the student objects
 
 /**
  * inputIds - id's of the elements that are used to add students
@@ -56,10 +56,10 @@ function addStudent(){
         }
     };
     student_array.push(student);         //pushes the student object into the student_array
-    addCourseName(student.course);
+    addCourseName(student.course); // calls function with course name parameter
 }
 
-
+// This function adds the course name to the courseList obj
 function addCourseName(course){
     courseList[course] = 1;
 }
@@ -191,16 +191,16 @@ function reset(){
 /**
  * Listen for the document to load and reset the data to the initial state
  */
-var timer = null;
+var timer = null; // this if for the timer functionality
 
-function checkObjList(){
+function checkObjList(){ // This is the function thats going to be used to compare the input course and whats in your courseList Obj
   var userInput = $('#studentName').val();
 
 }
 
 $(document).ready(function(){
     reset();//calls reset onload
-    $("#studentName").keyup(function(){
+    $("#studentName").keyup(function(){ // calls keyup method
         console.log("here");
         if (timer != null) {
             clearTimeout(timer);
