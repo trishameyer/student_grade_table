@@ -105,14 +105,23 @@ function updateData(){
  */
 function updateStudentList(){
     $('.student-list tbody').empty(); //empties tbody so updateStudentList starts with a fresh screen --used to prevent multiple entries when adding students
+    var empty_student_display = $('<td>',{
+        class:"empty",
+        colspan:2
+    });
+    var empty_display = $('<h4>',{
+        text:'User Info Unavailable',
+    });
     if (student_array.length == 0){
-        $('.student-list tbody').append('<td colspan="2" class="empty"><h4>User Info Unavailable</h4></td>'); // if studentArray is empty, display a no students message
+        $('.student-list tbody').append(empty_student_display);// if studentArray is empty, display a no students message
+        empty_student_display.append(empty_display);
     }else{
         for(i=0;i<student_array.length;i++){
             addStudentToDom(student_array[i]); //loops through the student array and calls addStudentToDom for each student
         }
     }
 }
+
 
 /**
  * addStudentToDom - take in a student object, create html elements from the values and then append the elements
