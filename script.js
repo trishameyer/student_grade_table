@@ -151,7 +151,9 @@ function updateStudentList(){
  * @param studentObj
  */
 function addStudentToDom(studentObj){ //appends student object data to the DOM and adds a delete button
-
+    if(studentObj === undefined){
+        return;
+    }
     var studentRow = $('<tr>');
     var studentName = $('<td>', {
         text:studentObj.name
@@ -190,16 +192,21 @@ function reset(){
  * Listen for the document to load and reset the data to the initial state
  */
 var timer = null;
-$(document).ready(function() {
-    reset();//calls reset onload
 
-    $("#search").keyup(function(){
+function checkObjList(){
+  var userInput = $('#studentName').val();
+
+}
+
+$(document).ready(function(){
+    reset();//calls reset onload
+    $("#studentName").keyup(function(){
         console.log("here");
         if (timer != null) {
             clearTimeout(timer);
         }
         timer = setTimeout(function() {
-            console.log("it works");
+            checkObjList();
         }, 500);
     });
 });
