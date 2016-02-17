@@ -151,7 +151,8 @@ function addStudentToDom(studentObj){ //appends student object data to the DOM a
  */
 function reset(){
     student_array=[]; //resets the student array
-    updateStudentList();  //runs update data
+    updateStudentList();//runs update data
+    updateData();
 }
 
 /**
