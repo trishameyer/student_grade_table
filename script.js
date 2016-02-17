@@ -61,7 +61,7 @@ function addStudent() {
 var highestGrade = null;
 var lowestGrade = null;
 function checkHighestGrade(student_grade){
-    if (highestGrade == null){
+    if (highestGrade == null && lowestGrade == null){
         highestGrade = student_grade;
         lowestGrade = student_grade;
         console.log('HG: '+highestGrade, 'LG: '+lowestGrade);
@@ -72,6 +72,16 @@ function checkHighestGrade(student_grade){
     }else if (student_grade < lowestGrade){
         lowestGrade = student_grade;
         console.log('HG: '+highestGrade, 'LG: '+lowestGrade);
+    }
+    highlightGrade(student_grade,highestGrade,lowestGrade);
+}
+function highlightGrade (student_grade, highestGrade,lowestGrade) {
+    if (highestGrade != lowestGrade){
+        if(student_grade == highestGrade){
+            $('td').addClass('success');
+        }else if(student_grade == lowestGrade){
+            $('td').addClass('danger');
+        }
     }
 }
 
