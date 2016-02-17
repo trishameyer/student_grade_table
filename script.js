@@ -6,6 +6,7 @@
  * @type {Array}
  */
 var student_array=[];
+var courseList = {};
 
 /**
  * inputIds - id's of the elements that are used to add students
@@ -14,9 +15,13 @@ var student_array=[];
 var inputIds = ['#studentName','#course','#studentGrade'];
 //var studentNameInput = $('#studentName');
 
+
 /**
  * addClicked - Event Handler when user clicks the add button
  */
+
+
+
 function addClicked(){
     addStudent();  //calls addstudent()
     clearAddStudentForm(); //calls clearAddStudentForm()
@@ -51,7 +56,24 @@ function addStudent(){
         }
     };
     student_array.push(student);         //pushes the student object into the student_array
+    addCourseName(student.course);
 }
+
+
+function addCourseName(course){
+    courseList[course] = 1;
+}
+
+//var timer = null;
+//$("#search").keyup(function(){
+//    if(timer != null){
+//        clearTimeout(timer);
+//    }
+//    timer = setTimeout(function(){
+//        console.log("it works");
+//    },500);
+//}
+
 
 /*
 ** changeIndex = changes the arrayIndex key value in all objects when a object gets deleted
@@ -132,7 +154,7 @@ function addStudentToDom(studentObj){ //appends student object data to the DOM a
 
     var studentRow = $('<tr>');
     var studentName = $('<td>', {
-        text: studentObj.name
+        text:studentObj.name
     });
     var studentCourse = $('<td>',{
         text:studentObj.course
@@ -167,6 +189,17 @@ function reset(){
 /**
  * Listen for the document to load and reset the data to the initial state
  */
-$(document).ready(function(){
-    reset(); //calls reset onload
+var timer = null;
+$(document).ready(function() {
+    reset();//calls reset onload
+
+    $("#search").keyup(function(){
+        console.log("here");
+        if (timer != null) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(function() {
+            console.log("it works");
+        }, 500);
+    });
 });
