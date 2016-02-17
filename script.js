@@ -46,9 +46,20 @@ function addStudent(){
         delete_self : function(){
             this.element.remove();
             student_array.splice(this.arrayIndex,1);
+            changeIndex(this.arrayIndex);
         }
     };
     student_array.push(student);         //pushes the student object into the student_array
+}
+
+/*
+** changeIndex = changes the arrayIndex key value in all objects when a object gets deleted
+ */
+function changeIndex(objIndex){
+
+    for(objIndex; objIndex < student_array.length; objIndex++){
+        student_array[objIndex].arrayIndex -= 1;
+    }
 }
 
 /**
@@ -85,7 +96,7 @@ function calculateAverage(){
  */
 function updateData(){
     $('.avgGrade').text(calculateAverage()); //updates .avgGrade text by calling the calculateAverage() function
-    updateStudentList();  //calls updateStudentList()
+    addStudentToDom(student_array[student_array.length-1]);  //calls updateStudentList()
 }
 
 /**
@@ -139,7 +150,7 @@ function addStudentToDom(studentObj){ //appends student object data to the DOM a
  */
 function reset(){
     student_array=[]; //resets the student array
-    updateData();     //runs update data
+    updateStudentList();  //runs update data
 }
 
 /**
