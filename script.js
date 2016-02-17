@@ -12,6 +12,7 @@ var student_array=[];
  * @type {string[]}
  */
 var inputIds = ['#studentName','#course','#studentGrade'];
+//var studentNameInput = $('#studentName');
 
 /**
  * addClicked - Event Handler when user clicks the add button
@@ -35,10 +36,17 @@ function cancelClicked(){
  * @return undefined
  */
 function addStudent(){
+    var arrayIndex = student_array.length;
     var student= {
         name: $('#studentName').val(),   //creates an object variable with property called name
         course: $('#course').val(),      //property called course
-        grade: $('#studentGrade').val()  //and property called grade
+        grade: $('#studentGrade').val(),  //and property called grade
+        arrayIndex: arrayIndex,
+        element: null,
+        delete_self : function(){
+            this.element.remove();
+            student_array.splice(this.arrayIndex,1);
+        }
     };
     student_array.push(student);         //pushes the student object into the student_array
 }
@@ -86,7 +94,7 @@ function updateData(){
 function updateStudentList(){
     $('.student-list tbody').empty(); //empties tbody so updateStudentList starts with a fresh screen --used to prevent multiple entries when adding students
     if (student_array.length == 0){
-        $('.student-list tbody').append('<td colspan="2"><h4>User Info Unavailable</h4></td>') // if studentArray is empty, display a no students message
+        $('.student-list tbody').append('<td colspan="2"><h4>User Info Unavailable</h4></td>'); // if studentArray is empty, display a no students message
     }else{
         for(i=0;i<student_array.length;i++){
             addStudentToDom(student_array[i]); //loops through the student array and calls addStudentToDom for each student
@@ -100,7 +108,30 @@ function updateStudentList(){
  * @param studentObj
  */
 function addStudentToDom(studentObj){ //appends student object data to the DOM and adds a delete button
-        $('.student-list tbody').append('<tr><td>' + studentObj.name + '</td><td>' + studentObj.course + '</td><td>' + studentObj.grade +'</td><td><button class="btn btn-danger">Delete</button></td></tr>');
+
+    var studentRow = $('<tr>');
+    var studentName = $('<td>', {
+        text: studentObj.name
+    });
+    var studentCourse = $('<td>',{
+        text:studentObj.course
+    });
+    var studentGrade = $('<td>',{
+        text:studentObj.grade
+    });
+    var deleteButton = $('<button>',{
+        class:"btn btn-danger",
+        text:"Delete"
+    });
+    deleteButton.on('click',function(){
+        //studentObj.element.remove();
+        studentObj.delete_self();
+       console.log('my element is ',studentObj);
+    });
+    $('tbody').append(studentRow);
+    studentRow.append(studentName, studentCourse, studentGrade, deleteButton);
+    studentObj.element = studentRow;
+
 }
 
 /**
