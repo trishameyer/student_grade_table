@@ -53,37 +53,49 @@ function addStudent() {
 
     };
     student_array.push(student);
-    checkHighestGrade(student.grade);
+    //checkHighestGrade(student.grade);
+    checkGrade(student_array,student.grade);
 
 
             //pushes the student object into the student_array
 }
 var highestGrade = null;
 var lowestGrade = null;
-function checkHighestGrade(student_grade){
-    if (highestGrade == null && lowestGrade == null){
-        highestGrade = student_grade;
-        lowestGrade = student_grade;
-        console.log('HG: '+highestGrade, 'LG: '+lowestGrade);
-    }else if (student_grade > highestGrade) {
-        //lowestGrade = highestGrade;
-        highestGrade = student_grade;
-        console.log('HG: '+highestGrade, 'LG: '+lowestGrade);
-    }else if (student_grade < lowestGrade){
-        lowestGrade = student_grade;
-        console.log('HG: '+highestGrade, 'LG: '+lowestGrade);
-    }
-    highlightGrade(student_grade,highestGrade,lowestGrade);
-}
-function highlightGrade (student_grade, highestGrade,lowestGrade) {
-    if (highestGrade != lowestGrade){
-        if(student_grade == highestGrade){
-            $('td').addClass('success');
-        }else if(student_grade == lowestGrade){
-            $('td').addClass('danger');
+function checkGrade(array,student_grade){
+    highestGrade = array[0].grade;
+    for(var i = 0; i < array.length; i++){
+        if (highestGrade < array[i].grade){
+            lowestGrade = highestGrade;
+            highestGrade = array[i].grade;
         }
     }
 }
+//var highestGrade = null;
+//var lowestGrade = null;
+//function checkHighestGrade(student_grade){
+//    if (highestGrade == null && lowestGrade == null){
+//        highestGrade = student_grade;
+//        lowestGrade = student_grade;
+//        console.log('HG: '+highestGrade, 'LG: '+lowestGrade);
+//    }else if (student_grade > highestGrade) {
+//        //lowestGrade = highestGrade;
+//        highestGrade = student_grade;
+//        console.log('HG: '+highestGrade, 'LG: '+lowestGrade);
+//    }else if (student_grade < lowestGrade){
+//        lowestGrade = student_grade;
+//        console.log('HG: '+highestGrade, 'LG: '+lowestGrade);
+//    }
+//    highlightGrade(student_grade,highestGrade,lowestGrade);
+//}
+//function highlightGrade (student_grade, highestGrade,lowestGrade) {
+//    if (highestGrade != lowestGrade){
+//        if(student_grade == highestGrade){
+//            $('td').addClass('success');
+//        }else if(student_grade == lowestGrade){
+//            $('td').addClass('danger');
+//        }
+//    }
+//}
 
 /*
 ** changeIndex = changes the arrayIndex key value in all objects when a object gets deleted
