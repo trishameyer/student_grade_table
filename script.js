@@ -85,7 +85,7 @@ function calculateAverage(){
  */
 function updateData(){
     $('.avgGrade').text(calculateAverage()); //updates .avgGrade text by calling the calculateAverage() function
-    updateStudentList();  //calls updateStudentList()
+    addStudentToDom(student_array[student_array.length-1]);  //calls updateStudentList()
 }
 
 /**
@@ -137,7 +137,8 @@ function addStudentToDom(studentObj){ //appends student object data to the DOM a
  */
 function reset(){
     student_array=[]; //resets the student array
-    updateData();     //runs update data
+    updateStudentList();//runs update data
+    updateData();
 }
 
 /**
