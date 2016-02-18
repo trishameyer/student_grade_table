@@ -7,7 +7,7 @@
  */
 var student_array=[];
 var courseList = {}; //This object is created to store the course names from the student objects
-
+var courseInput = null;
 /**
  * inputIds - id's of the elements that are used to add students
  * @type {string[]}
@@ -145,7 +145,6 @@ function addCourseName(course){
 ** changeIndex = changes the arrayIndex key value in all objects when a object gets deleted
  */
 function changeIndex(objIndex){
-
     for(objIndex; objIndex < student_array.length; objIndex++){
         student_array[objIndex].arrayIndex -= 1;
     }
@@ -210,7 +209,6 @@ function updateStudentList(){
     }
 }
 
-
 /**
  * addStudentToDom - take in a student object, create html elements from the values and then append the elements
  * into the .student_list tbody
@@ -263,7 +261,49 @@ function checkObjList(){ // This is the function thats going to be used to compa
   var userInput = $('#studentName').val();
 
 }
+function keyPressRelease(){
+    console.log('key is pressed up!');
+    courseInput = $('#course').val().toLowerCase();
+    console.log('courseInput ', courseInput);
+    $('#courseDropDown').empty();
+    autoComplete();
+    //if the courseInput length is 0 (if the user types something and erases all input)
+    if(courseInput.length == 0){
+        eraseAutoComplete();
+    }
+}
+function autoComplete(){
+    console.log('autocomplete function invoked');
+    var courseListArray = Object.keys(courseList);
+    console.log('course list arrays: ', courseListArray);
+    var list = null;
+    for(var i in courseListArray){
+        console.log('')
 
+        //if the length of the userInput matches the substring of course
+        if(courseInput == courseListArray[i].substring(0, courseInput.length)){
+            list = $('<li>', {
+                class: "dropDownShow",
+                text: courseListArray[i]
+            });
+            //append to dropDownShow
+            $('#courseDropDown').append(list).css({
+                'display': 'block',
+                'padding-left': '15px'
+            });
+        }
+    }
+    console.log('list: ', list);
+    $('.dropDownShow').on('click', function(){
+        var listText = $(this).text();
+        $('#course').val(listText);
+        eraseAutoComplete();
+    });
+}
+function eraseAutoComplete(){
+    $('#courseDropDown').empty();
+    $('#courseDropDown').hide();
+}
 $(document).ready(function(){
     reset();//calls reset onload
     $("#studentName").keyup(function(){ // calls keyup method
