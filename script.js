@@ -26,6 +26,7 @@ function addClicked(){
     addStudent();  //calls addstudent()
     clearAddStudentForm(); //calls clearAddStudentForm()
     updateData(); //calls updateData()
+    highlightGrade(student_array);
     $('.empty').remove();
 }
 
@@ -58,77 +59,39 @@ function addStudent() {
     student_array.push(student);
     addCourseName(student.course);
     //checkHighestGrade(student.grade);
-    checkGrade(student_array);
+
 }
 
-function highlightGrade(){
+function highlightGrade(array) {
     var highestGrade = array[0].grade;
     var lowestGrade = array[0].grade;
-    if (student_array.length>=2){
-
-    }
-}
-
-function checkGrade(array){
-    var highestGrade = array[0].grade;
-    var lowestGrade = array[0].grade;
-    var highestStudent = array[0];
-    var lowestStudent = array[0];
-
-    for(var i = 1; i < array.length; i++){
-        var currentStudentGrade = array[i].grade;
-        if (highestGrade < currentStudentGrade){
-            highestGrade = currentStudentGrade;
-            highestStudent = array[i];
-        }else if (highestGrade > currentStudentGrade){
-            if (lowestGrade > currentStudentGrade){
-                lowestGrade = currentStudentGrade;
-                lowestStudent = array[i];
+    if (student_array.length >= 2) {
+        for (var i = 0; i < student_array.length; i++) {
+            if (student_array[i].grade === highestGrade) {
+                student_array[i].element.addClass('bg-success');
+            }
+            if (student_array[i].grade > highestGrade) {
+                highestGrade = student_array[i].grade;
+                $('.bg-success').removeClass('bg-success');
+                student_array[i].element.addClass('bg-success');
+            }
+            if (student_array[i].grade === lowestGrade) {
+                student_array[i].element.addClass('bg-danger');
+            }
+            if (student_array[i].grade < lowestGrade) {
+                $('.bg-danger').removeClass('bg-danger');
+                student_array[i].element.addClass('bg-danger');
             }
         }
-        console.log(highestGrade, lowestGrade);
     }
-    highlightGrade(highestStudent,lowestStudent);
+
 }
-function highlightGrade (highestStudent, lowestStudent) {
-    $(highestStudent).addClass('bg-success');
-    $(lowestStudent).addClass('bg-danger');
-
-    ////if (highestGrade != lowestGrade){
-    //for(var i = 0; i < student_array.length; i++){
-    //    if(highestGrade == student_array[i]){
-    //        $('td').addClass('success');
-    //    }else if(currentStudentGrade == lowestGrade){
-    //        $('td').addClass('danger');
-    //
-    //    }
-    //}
-    }
-
-//}
-//var highestGrade = null;
-//var lowestGrade = null;
-//function checkHighestGrade(student_grade){
-//    if (highestGrade == null && lowestGrade == null){
-//        highestGrade = student_grade;
-//        lowestGrade = student_grade;
-//        console.log('HG: '+highestGrade, 'LG: '+lowestGrade);
-//    }else if (student_grade > highestGrade) {
-//        //lowestGrade = highestGrade;
-//        highestGrade = student_grade;
-//        console.log('HG: '+highestGrade, 'LG: '+lowestGrade);
-//    }else if (student_grade < lowestGrade){
-//        lowestGrade = student_grade;
-//        console.log('HG: '+highestGrade, 'LG: '+lowestGrade);
-//    }
-//    highlightGrade(student_grade,highestGrade,lowestGrade);
-//}
 
 
 // This function adds the course name to the courseList obj
-function addCourseName(course){
-    courseList[course] = 1;
-}
+    function addCourseName(course) {
+        courseList[course] = 1;
+    }
 
 //var timer = null;
 //$("#search").keyup(function(){
@@ -141,178 +104,183 @@ function addCourseName(course){
 //}
 
 
-/*
-** changeIndex = changes the arrayIndex key value in all objects when a object gets deleted
- */
-function changeIndex(objIndex){
-    for(objIndex; objIndex < student_array.length; objIndex++){
-        student_array[objIndex].arrayIndex -= 1;
-    }
-}
-
-/**
- * clearAddStudentForm - clears out the form values based on inputIds variable
- */
-function clearAddStudentForm(){
-    for(i=0;i<inputIds.length;i++){
-        $(inputIds[i]).val("");  //for loop runs through the inputId's array and resets their input values to an empty string
-    }
-}
-
-/**
- * calculateAverage - loop through the global student array and calculate average grade and return that value
- * @returns {number}
- */
-function calculateAverage(){
-    var runningGradeAverage=0; //creates a variable called runningGradeAverage
-    var finalAverage=0;        // creates a variable called finalAverage
-    if(student_array.length==0){
-        return 0;              // if there is nothing in the student array, return 0
-    }else {
-        for(i=0;i<student_array.length;i++){
-            runningGradeAverage+=Number(student_array[i].grade); //if there is something inside the student array, the running grade average gets the value of student[i].grade added to it
-        }
-        finalAverage=parseInt(runningGradeAverage/student_array.length); //after the loop the running grade average gets divided by the studentArray.length
-    }
-
-    return finalAverage;  //returns the final average for display
-
-}
-
-/**
- * updateData - centralized function to update the average and call student list update
- */
-function updateData(){
-    $('.avgGrade').text(calculateAverage()); //updates .avgGrade text by calling the calculateAverage() function
-    addStudentToDom(student_array[student_array.length-1]);  //calls updateStudentList()
-}
-
-/**
- * updateStudentList - loops through global student array and appends each objects data into the student-list-container > list-body
- */
-function updateStudentList(){
-    $('.student-list tbody').empty(); //empties tbody so updateStudentList starts with a fresh screen --used to prevent multiple entries when adding students
-    var empty_student_display = $('<td>',{
-        class:"empty",
-        colspan:2
-    });
-    var empty_display = $('<h4>',{
-        text:'User Info Unavailable',
-    });
-    if (student_array.length == 0){
-        $('.student-list tbody').append(empty_student_display);// if studentArray is empty, display a no students message
-        empty_student_display.append(empty_display);
-    }else{
-        for(i=0;i<student_array.length;i++){
-            addStudentToDom(student_array[i]); //loops through the student array and calls addStudentToDom for each student
+    /*
+     ** changeIndex = changes the arrayIndex key value in all objects when a object gets deleted
+     */
+    function changeIndex(objIndex) {
+        for (objIndex; objIndex < student_array.length; objIndex++) {
+            student_array[objIndex].arrayIndex -= 1;
         }
     }
-}
 
-/**
- * addStudentToDom - take in a student object, create html elements from the values and then append the elements
- * into the .student_list tbody
- * @param studentObj
- */
-function addStudentToDom(studentObj){ //appends student object data to the DOM and adds a delete button
-    if(studentObj === undefined){
-        return;
-    }
-    var studentRow = $('<tr>');
-    var studentName = $('<td>', {
-        text:studentObj.name
-    });
-    var studentCourse = $('<td>',{
-        text:studentObj.course
-    });
-    var studentGrade = $('<td>',{
-        text:studentObj.grade
-    });
-    var deleteButton = $('<button>',{
-        class:"btn btn-danger",
-        text:"Delete"
-    });
-    deleteButton.on('click',function(){
-        //studentObj.element.remove();
-        studentObj.delete_self();
-       console.log('my element is ',studentObj);
-    });
-    $('tbody').append(studentRow);
-    studentRow.append(studentName, studentCourse, studentGrade, deleteButton);
-    studentObj.element = studentRow;
-
-}
-
-/**
- * reset - resets the application to initial state. Global variables reset, DOM get reset to initial load state
- */
-function reset(){
-    student_array=[]; //resets the student array
-    updateStudentList();//runs update data
-    updateData();
-}
-
-/**
- * Listen for the document to load and reset the data to the initial state
- */
-var timer = null; // this if for the timer functionality
-
-function checkObjList(){ // This is the function thats going to be used to compare the input course and whats in your courseList Obj
-  var userInput = $('#studentName').val();
-
-}
-function keyPressRelease(){
-    console.log('key is pressed up!');
-    courseInput = $('#course').val().toLowerCase();
-    console.log('courseInput ', courseInput);
-    $('#courseDropDown').empty();
-    autoComplete();
-    //if the courseInput length is 0 (if the user types something and erases all input)
-    if(courseInput.length == 0){
-        eraseAutoComplete();
-    }
-}
-function autoComplete(){
-    console.log('autocomplete function invoked');
-    var courseListArray = Object.keys(courseList);
-    console.log('course list arrays: ', courseListArray);
-    var list = null;
-    for(var i in courseListArray){
-        console.log('')
-
-        //if the length of the userInput matches the substring of course
-        if(courseInput == courseListArray[i].substring(0, courseInput.length)){
-            list = $('<li>', {
-                class: "dropDownShow",
-                text: courseListArray[i]
-            });
-            //append to dropDownShow
-            $('#courseDropDown').append(list).css({
-                'display': 'block',
-                'padding-left': '15px'
-            });
+    /**
+     * clearAddStudentForm - clears out the form values based on inputIds variable
+     */
+    function clearAddStudentForm() {
+        for (i = 0; i < inputIds.length; i++) {
+            $(inputIds[i]).val("");  //for loop runs through the inputId's array and resets their input values to an empty string
         }
     }
-    console.log('list: ', list);
-    $('.dropDownShow').on('click', function(){
-        var listText = $(this).text();
-        $('#course').val(listText);
-        eraseAutoComplete();
-    });
-}
-function eraseAutoComplete(){
-    $('#courseDropDown').empty();
-    $('#courseDropDown').hide();
-}
-$(document).ready(function(){
-    reset();//calls reset onload
-    $("#studentName").keyup(function(){ // calls keyup method
-        console.log("here");
-        if (timer != null) {
-            clearTimeout(timer);
+
+    /**
+     * calculateAverage - loop through the global student array and calculate average grade and return that value
+     * @returns {number}
+     */
+    function calculateAverage() {
+        var runningGradeAverage = 0; //creates a variable called runningGradeAverage
+        var finalAverage = 0;        // creates a variable called finalAverage
+        if (student_array.length == 0) {
+            return 0;              // if there is nothing in the student array, return 0
+        } else {
+            for (i = 0; i < student_array.length; i++) {
+                runningGradeAverage += Number(student_array[i].grade); //if there is something inside the student array, the running grade average gets the value of student[i].grade added to it
+            }
+            finalAverage = parseInt(runningGradeAverage / student_array.length); //after the loop the running grade average gets divided by the studentArray.length
         }
-        timer = setTimeout(function() {
-            checkObjList();
-        }, 500);
+
+        return finalAverage;  //returns the final average for display
+
+    }
+
+    /**
+     * updateData - centralized function to update the average and call student list update
+     */
+    function updateData() {
+        $('.avgGrade').text(calculateAverage()); //updates .avgGrade text by calling the calculateAverage() function
+        addStudentToDom(student_array[student_array.length - 1]);  //calls updateStudentList()
+    }
+
+    /**
+     * updateStudentList - loops through global student array and appends each objects data into the student-list-container > list-body
+     */
+    function updateStudentList() {
+        $('.student-list tbody').empty(); //empties tbody so updateStudentList starts with a fresh screen --used to prevent multiple entries when adding students
+        var empty_student_display = $('<td>', {
+            class: "empty",
+            colspan: 2
+        });
+        var empty_display = $('<h4>', {
+            text: 'User Info Unavailable',
+        });
+        if (student_array.length == 0) {
+            $('.student-list tbody').append(empty_student_display);// if studentArray is empty, display a no students message
+            empty_student_display.append(empty_display);
+        } else {
+            for (i = 0; i < student_array.length; i++) {
+                addStudentToDom(student_array[i]); //loops through the student array and calls addStudentToDom for each student
+            }
+        }
+    }
+
+    /**
+     * addStudentToDom - take in a student object, create html elements from the values and then append the elements
+     * into the .student_list tbody
+     * @param studentObj
+     */
+    function addStudentToDom(studentObj) { //appends student object data to the DOM and adds a delete button
+        if (studentObj === undefined) {
+            return;
+        }
+        var studentRow = $('<tr>');
+        var studentName = $('<td>', {
+            text: studentObj.name
+        });
+        var studentCourse = $('<td>', {
+            text: studentObj.course
+        });
+        var studentGrade = $('<td>', {
+            text: studentObj.grade
+        });
+        var deleteButton = $('<button>', {
+            class: "btn btn-danger",
+            text: "Delete"
+        });
+        deleteButton.on('click', function () {
+            //studentObj.element.remove();
+            studentObj.delete_self();
+            console.log('my element is ', studentObj);
+        });
+        $('tbody').append(studentRow);
+        studentRow.append(studentName, studentCourse, studentGrade, deleteButton);
+        studentObj.element = studentRow;
+
+    }
+
+    /**
+     * reset - resets the application to initial state. Global variables reset, DOM get reset to initial load state
+     */
+    function reset() {
+        student_array = []; //resets the student array
+        updateStudentList();//runs update data
+        updateData();
+    }
+
+    /**
+     * Listen for the document to load and reset the data to the initial state
+     */
+    var timer = null; // this if for the timer functionality
+
+    function checkObjList() { // This is the function thats going to be used to compare the input course and whats in your courseList Obj
+        var userInput = $('#studentName').val();
+
+    }
+
+    function keyPressRelease() {
+        console.log('key is pressed up!');
+        courseInput = $('#course').val().toLowerCase();
+        console.log('courseInput ', courseInput);
+        $('#courseDropDown').empty();
+        autoComplete();
+        //if the courseInput length is 0 (if the user types something and erases all input)
+        if (courseInput.length == 0) {
+            eraseAutoComplete();
+        }
+    }
+
+    function autoComplete() {
+        console.log('autocomplete function invoked');
+        var courseListArray = Object.keys(courseList);
+        console.log('course list arrays: ', courseListArray);
+        var list = null;
+        for (var i in courseListArray) {
+            console.log('')
+
+            //if the length of the userInput matches the substring of course
+            if (courseInput == courseListArray[i].substring(0, courseInput.length)) {
+                list = $('<li>', {
+                    class: "dropDownShow",
+                    text: courseListArray[i]
+                });
+                //append to dropDownShow
+                $('#courseDropDown').append(list).css({
+                    'display': 'block',
+                    'padding-left': '15px'
+                });
+            }
+        }
+        console.log('list: ', list);
+        $('.dropDownShow').on('click', function () {
+            var listText = $(this).text();
+            $('#course').val(listText);
+            eraseAutoComplete();
+        });
+    }
+
+    function eraseAutoComplete() {
+        $('#courseDropDown').empty();
+        $('#courseDropDown').hide();
+    }
+
+    $(document).ready(function () {
+        reset();//calls reset onload
+        $("#studentName").keyup(function () { // calls keyup method
+            console.log("here");
+            if (timer != null) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(function () {
+                checkObjList();
+            }, 500);
+        });
     });
-});
+
