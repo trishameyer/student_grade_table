@@ -59,13 +59,14 @@ function addStudent() {
 
             //pushes the student object into the student_array
 }
-var highestGrade = null;
-var lowestGrade = null;
+
+
 function checkGrade(array,student_grade){
-    highestGrade = array[0].grade;
-    for(var i = 0; i < array.length; i++){
+    var highestGrade = array[0].grade;
+    var lowestGrade = null;
+    for(var i = 1; i < array.length; i++){
         if (highestGrade < array[i].grade){
-            lowestGrade = highestGrade;
+            //lowestGrade = highestGrade;
             highestGrade = array[i].grade;
         }
     }
