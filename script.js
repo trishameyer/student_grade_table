@@ -6,6 +6,7 @@
  * @type {Array}
  */
 var student_array=[];
+var courseList = {}; //This object is created to store the course names from the student objects
 
 /**
  * inputIds - id's of the elements that are used to add students
@@ -14,9 +15,13 @@ var student_array=[];
 var inputIds = ['#studentName','#course','#studentGrade'];
 //var studentNameInput = $('#studentName');
 
+
 /**
  * addClicked - Event Handler when user clicks the add button
  */
+
+
+
 function addClicked(){
     addStudent();  //calls addstudent()
     clearAddStudentForm(); //calls clearAddStudentForm()
@@ -36,22 +41,79 @@ function cancelClicked(){
  *
  * @return undefined
  */
-function addStudent(){
+function addStudent() {
     var arrayIndex = student_array.length;
-    var student= {
+    var student = {
         name: $('#studentName').val(),   //creates an object variable with property called name
         course: $('#course').val(),      //property called course
         grade: $('#studentGrade').val(),  //and property called grade
         arrayIndex: arrayIndex,
         element: null,
-        delete_self : function(){
+        delete_self: function () {
             this.element.remove();
-            student_array.splice(this.arrayIndex,1);
+            student_array.splice(this.arrayIndex, 1);
             changeIndex(this.arrayIndex);
         }
     };
-    student_array.push(student);         //pushes the student object into the student_array
+    student_array.push(student);
+    addCourseName(student.course);
+    //checkHighestGrade(student.grade);
+    checkGrade(student_array,student.grade);
 }
+
+function checkGrade(array,student_grade){
+    var highestGrade = array[0].grade;
+    var lowestGrade = null;
+    for(var i = 1; i < array.length; i++){
+        if (highestGrade < array[i].grade){
+            //lowestGrade = highestGrade;
+            highestGrade = array[i].grade;
+        }
+    }
+}
+
+//var highestGrade = null;
+//var lowestGrade = null;
+//function checkHighestGrade(student_grade){
+//    if (highestGrade == null && lowestGrade == null){
+//        highestGrade = student_grade;
+//        lowestGrade = student_grade;
+//        console.log('HG: '+highestGrade, 'LG: '+lowestGrade);
+//    }else if (student_grade > highestGrade) {
+//        //lowestGrade = highestGrade;
+//        highestGrade = student_grade;
+//        console.log('HG: '+highestGrade, 'LG: '+lowestGrade);
+//    }else if (student_grade < lowestGrade){
+//        lowestGrade = student_grade;
+//        console.log('HG: '+highestGrade, 'LG: '+lowestGrade);
+//    }
+//    highlightGrade(student_grade,highestGrade,lowestGrade);
+//}
+//function highlightGrade (student_grade, highestGrade,lowestGrade) {
+//    if (highestGrade != lowestGrade){
+//        if(student_grade == highestGrade){
+//            $('td').addClass('success');
+//        }else if(student_grade == lowestGrade){
+//            $('td').addClass('danger');
+//        }
+//    }
+//}
+
+// This function adds the course name to the courseList obj
+function addCourseName(course){
+    courseList[course] = 1;
+}
+
+//var timer = null;
+//$("#search").keyup(function(){
+//    if(timer != null){
+//        clearTimeout(timer);
+//    }
+//    timer = setTimeout(function(){
+//        console.log("it works");
+//    },500);
+//}
+
 
 /*
 ** changeIndex = changes the arrayIndex key value in all objects when a object gets deleted
@@ -84,7 +146,7 @@ function calculateAverage(){
         for(i=0;i<student_array.length;i++){
             runningGradeAverage+=Number(student_array[i].grade); //if there is something inside the student array, the running grade average gets the value of student[i].grade added to it
         }
-        finalAverage=runningGradeAverage/student_array.length; //after the loop the running grade average gets divided by the studentArray.length
+        finalAverage=parseInt(runningGradeAverage/student_array.length); //after the loop the running grade average gets divided by the studentArray.length
     }
 
     return finalAverage;  //returns the final average for display
@@ -130,10 +192,12 @@ function keyPressRelease(){
  * @param studentObj
  */
 function addStudentToDom(studentObj){ //appends student object data to the DOM and adds a delete button
-
+    if(studentObj === undefined){
+        return;
+    }
     var studentRow = $('<tr>');
     var studentName = $('<td>', {
-        text: studentObj.name
+        text:studentObj.name
     });
     var studentCourse = $('<td>',{
         text:studentObj.course
@@ -168,6 +232,22 @@ function reset(){
 /**
  * Listen for the document to load and reset the data to the initial state
  */
+var timer = null; // this if for the timer functionality
+
+function checkObjList(){ // This is the function thats going to be used to compare the input course and whats in your courseList Obj
+  var userInput = $('#studentName').val();
+
+}
+
 $(document).ready(function(){
-    reset(); //calls reset onload
+    reset();//calls reset onload
+    $("#studentName").keyup(function(){ // calls keyup method
+        console.log("here");
+        if (timer != null) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(function() {
+            checkObjList();
+        }, 500);
+    });
 });
