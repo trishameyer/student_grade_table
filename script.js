@@ -58,20 +58,54 @@ function addStudent() {
     student_array.push(student);
     addCourseName(student.course);
     //checkHighestGrade(student.grade);
-    checkGrade(student_array,student.grade);
+    checkGrade(student_array);
 }
 
-function checkGrade(array,student_grade){
+function highlightGrade(){
     var highestGrade = array[0].grade;
-    var lowestGrade = null;
-    for(var i = 1; i < array.length; i++){
-        if (highestGrade < array[i].grade){
-            //lowestGrade = highestGrade;
-            highestGrade = array[i].grade;
-        }
+    var lowestGrade = array[0].grade;
+    if (student_array.length>=2){
+
     }
 }
 
+function checkGrade(array){
+    var highestGrade = array[0].grade;
+    var lowestGrade = array[0].grade;
+    var highestStudent = array[0];
+    var lowestStudent = array[0];
+
+    for(var i = 1; i < array.length; i++){
+        var currentStudentGrade = array[i].grade;
+        if (highestGrade < currentStudentGrade){
+            highestGrade = currentStudentGrade;
+            highestStudent = array[i];
+        }else if (highestGrade > currentStudentGrade){
+            if (lowestGrade > currentStudentGrade){
+                lowestGrade = currentStudentGrade;
+                lowestStudent = array[i];
+            }
+        }
+        console.log(highestGrade, lowestGrade);
+    }
+    highlightGrade(highestStudent,lowestStudent);
+}
+function highlightGrade (highestStudent, lowestStudent) {
+    $(highestStudent).addClass('bg-success');
+    $(lowestStudent).addClass('bg-danger');
+
+    ////if (highestGrade != lowestGrade){
+    //for(var i = 0; i < student_array.length; i++){
+    //    if(highestGrade == student_array[i]){
+    //        $('td').addClass('success');
+    //    }else if(currentStudentGrade == lowestGrade){
+    //        $('td').addClass('danger');
+    //
+    //    }
+    //}
+    }
+
+//}
 //var highestGrade = null;
 //var lowestGrade = null;
 //function checkHighestGrade(student_grade){
@@ -89,15 +123,7 @@ function checkGrade(array,student_grade){
 //    }
 //    highlightGrade(student_grade,highestGrade,lowestGrade);
 //}
-//function highlightGrade (student_grade, highestGrade,lowestGrade) {
-//    if (highestGrade != lowestGrade){
-//        if(student_grade == highestGrade){
-//            $('td').addClass('success');
-//        }else if(student_grade == lowestGrade){
-//            $('td').addClass('danger');
-//        }
-//    }
-//}
+
 
 // This function adds the course name to the courseList obj
 function addCourseName(course){
