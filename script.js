@@ -57,7 +57,6 @@ function addStudent(){
 ** changeIndex = changes the arrayIndex key value in all objects when a object gets deleted
  */
 function changeIndex(objIndex){
-
     for(objIndex; objIndex < student_array.length; objIndex++){
         student_array[objIndex].arrayIndex -= 1;
     }
@@ -121,7 +120,9 @@ function updateStudentList(){
         }
     }
 }
-
+function keyPressRelease(){
+    console.log('key is pressed up!');
+}
 
 /**
  * addStudentToDom - take in a student object, create html elements from the values and then append the elements
