@@ -59,8 +59,7 @@ function addStudent() {
         }
     };
     student_array.push(student);
-    var lowerCaseCourse = student.course.toLowerCase();
-    addCourseName(lowerCaseCourse);
+    addCourseName(student.course);
     //checkHighestGrade(student.grade);
 
 }
@@ -252,7 +251,7 @@ function highlightGrade(array) {
             console.log('');
 
             //if the length of the userInput matches the substring of course
-            if (courseInput == courseListArray[i].substring(0, courseInput.length)) {
+            if (courseInput == courseListArray[i].substring(0, courseInput.length).toLowerCase()) {
                 list = $('<li>', {
                     class: "dropDownShow",
                     text: courseListArray[i]
@@ -314,7 +313,7 @@ function getDataFromServer(){
                 };
                 student_array.push(responseData[i]);
                 var lowerCaseCourse = responseData[i].course.toLowerCase();
-                addCourseName(lowerCaseCourse);
+                addCourseName(responseData[i].course);
             }
             updateStudentList();
             highlightGrade(student_array);
