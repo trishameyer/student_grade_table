@@ -81,6 +81,7 @@ function highlightGrade(array) {
                 student_array[i].element.addClass('bg-danger');
             }
             if (Number(student_array[i].grade) < lowestGrade) {
+                lowestGrade = Number(student_array[i].grade);
                 $('.bg-danger').removeClass('bg-danger');
                 student_array[i].element.addClass('bg-danger');
             }
