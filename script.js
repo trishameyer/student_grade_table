@@ -64,28 +64,27 @@ function addStudent() {
 }
 
 function highlightGrade(array) {
-    var highestGrade = array[0].grade;
-    var lowestGrade = array[0].grade;
+    var highestGrade = Number(array[0].grade);
+    var lowestGrade = Number(array[0].grade);
     if (student_array.length >= 2) {
         for (var i = 0; i < student_array.length; i++) {
-            if (student_array[i].grade === highestGrade) {
+            if (Number(student_array[i].grade) === highestGrade) {
                 student_array[i].element.addClass('bg-success');
             }
-            if (student_array[i].grade > highestGrade) {
-                highestGrade = student_array[i].grade;
+            if (Number(student_array[i].grade) > highestGrade) {
+                highestGrade = Number(student_array[i].grade);
                 $('.bg-success').removeClass('bg-success');
                 student_array[i].element.addClass('bg-success');
             }
-            if (student_array[i].grade === lowestGrade) {
+            if (Number(student_array[i].grade) === lowestGrade) {
                 student_array[i].element.addClass('bg-danger');
             }
-            if (student_array[i].grade < lowestGrade) {
+            if (Number(student_array[i].grade) < lowestGrade) {
                 $('.bg-danger').removeClass('bg-danger');
                 student_array[i].element.addClass('bg-danger');
             }
         }
     }
-
 }
 
 
@@ -246,7 +245,7 @@ function highlightGrade(array) {
         console.log('course list arrays: ', courseListArray);
         var list = null;
         for (var i in courseListArray) {
-            console.log('')
+            console.log('');
 
             //if the length of the userInput matches the substring of course
             if (courseInput == courseListArray[i].substring(0, courseInput.length)) {
@@ -287,3 +286,22 @@ function highlightGrade(array) {
         });
     });
 
+function getDataFromServer(){
+    $.ajax({
+        dataType:'json',
+        data:{
+            api_key:'LEARNING'
+        },
+        method:'POST',
+        url:'http://s-apis.learningfuze.com/sgt/get',
+        success: function(response){
+            var responseData = response.data;
+            console.log(responseData);
+            for(var i = 0;i < responseData.length;i++){
+                student_array.push(responseData[i]);
+            }
+            updateStudentList();
+            highlightGrade(student_array);
+        }
+    })
+}
