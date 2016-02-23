@@ -58,7 +58,8 @@ function addStudent() {
         }
     };
     student_array.push(student);
-    addCourseName(student.course);
+    //addCourseName(student.course);
+    addCourseName(courseInput);
     //checkHighestGrade(student.grade);
 
 }
@@ -90,9 +91,10 @@ function highlightGrade(array) {
 
 
 // This function adds the course name to the courseList obj
-    function addCourseName(course) {
-        courseList[course] = 1;
-    }
+function addCourseName(course) {
+    //var courseLowerCase = course.toLowerCase();
+    courseList[course] = 1;
+}
 
 //var timer = null;
 //$("#search").keyup(function(){
