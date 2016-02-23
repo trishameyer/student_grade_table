@@ -65,6 +65,7 @@ function addStudent() {
 }
 
 function highlightGrade(array) {
+<<<<<<< HEAD
     var highestGrade = parseInt(array[0].grade);
     var lowestGrade = parseInt(array[0].grade);
     if (student_array.length >= 2) {
@@ -92,7 +93,6 @@ function highlightGrade(array) {
         $('.bg-danger').removeClass('bg-danger');
         $('.bg-success').removeClass('bg-success');
     }
-
 }
 
 
@@ -254,7 +254,7 @@ function addCourseName(course) {
         console.log('course list arrays: ', courseListArray);
         var list = null;
         for (var i in courseListArray) {
-            console.log('')
+            console.log('');
 
             //if the length of the userInput matches the substring of course
             if (courseInput == courseListArray[i].substring(0, courseInput.length)) {
@@ -295,3 +295,22 @@ function addCourseName(course) {
         });
     });
 
+function getDataFromServer(){
+    $.ajax({
+        dataType:'json',
+        data:{
+            api_key:'LEARNING'
+        },
+        method:'POST',
+        url:'http://s-apis.learningfuze.com/sgt/get',
+        success: function(response){
+            var responseData = response.data;
+            console.log(responseData);
+            for(var i = 0;i < responseData.length;i++){
+                student_array.push(responseData[i]);
+            }
+            updateStudentList();
+            highlightGrade(student_array);
+        }
+    })
+}
