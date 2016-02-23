@@ -84,6 +84,9 @@ function highlightGrade(array) {
                 student_array[i].element.addClass('bg-danger');
             }
         }
+    }else{
+        $('.bg-danger').removeClass('bg-danger');
+        $('.bg-success').removeClass('bg-success');
     }
 
 }
