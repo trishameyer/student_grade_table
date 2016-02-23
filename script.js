@@ -65,27 +65,23 @@ function addStudent() {
 }
 
 function highlightGrade(array) {
-    var highestGrade = array[0].grade;
-    var lowestGrade = array[0].grade;
+    var highestGrade = parseInt(array[0].grade);
+    var lowestGrade = parseInt(array[0].grade);
     if (student_array.length >= 2) {
         for (var i = 0; i < student_array.length; i++) {
-            //if(highestGrade == lowestGrade){
-            //    $('.bg-danger').removeClass('bg-danger');
-            //    $('.bg-success').removeClass('bg-success');
-            //}
-            if (student_array[i].grade === highestGrade) {
+            if (parseInt(student_array[i].grade) === highestGrade) {
                 student_array[i].element.addClass('bg-success');
             }
-            if (student_array[i].grade > highestGrade) {
-                highestGrade = student_array[i].grade;
+            if (parseInt(student_array[i].grade) > highestGrade) {
+                highestGrade = parseInt(student_array[i].grade);
                 $('.bg-success').removeClass('bg-success');
                 student_array[i].element.addClass('bg-success');
             }
-            if (student_array[i].grade === lowestGrade) {
+            if (parseInt(student_array[i].grade) === lowestGrade) {
                 student_array[i].element.addClass('bg-danger');
             }
-            if (student_array[i].grade < lowestGrade) {
-                lowestGrade = student_array[i].grade;
+            if (parseInt(student_array[i].grade) < lowestGrade) {
+                lowestGrade = parseInt(student_array[i].grade);
                 $('.bg-danger').removeClass('bg-danger');
                 student_array[i].element.addClass('bg-danger');
             }
