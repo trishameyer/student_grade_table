@@ -63,7 +63,6 @@ function addStudent() {
     //checkHighestGrade(student.grade);
 
 }
-
 function highlightGrade(array) {
     var highestGrade = array[0].grade;
     var lowestGrade = array[0].grade;
