@@ -65,7 +65,6 @@ function addStudent() {
 }
 
 function highlightGrade(array) {
-<<<<<<< HEAD
     var highestGrade = parseInt(array[0].grade);
     var lowestGrade = parseInt(array[0].grade);
     if (student_array.length >= 2) {
