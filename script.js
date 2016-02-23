@@ -54,52 +54,46 @@ function addStudent() {
             this.element.remove();
             student_array.splice(this.arrayIndex, 1);
             changeIndex(this.arrayIndex);
+            $('.avgGrade').text(calculateAverage());
 
         }
     };
     student_array.push(student);
-    //addCourseName(student.course);
-    addCourseName(courseInput);
+    addCourseName(student.course);
     //checkHighestGrade(student.grade);
 
 }
 
 function highlightGrade(array) {
-    var highestGrade = parseInt(array[0].grade);
-    var lowestGrade = parseInt(array[0].grade);
+    var highestGrade = Number(array[0].grade);
+    var lowestGrade = Number(array[0].grade);
     if (student_array.length >= 2) {
         for (var i = 0; i < student_array.length; i++) {
-            if (parseInt(student_array[i].grade) === highestGrade) {
+            if (Number(student_array[i].grade) === highestGrade) {
                 student_array[i].element.addClass('bg-success');
             }
-            if (parseInt(student_array[i].grade) > highestGrade) {
-                highestGrade = parseInt(student_array[i].grade);
+            if (Number(student_array[i].grade) > highestGrade) {
+                highestGrade = Number(student_array[i].grade);
                 $('.bg-success').removeClass('bg-success');
                 student_array[i].element.addClass('bg-success');
             }
-            if (parseInt(student_array[i].grade) === lowestGrade) {
+            if (Number(student_array[i].grade) === lowestGrade) {
                 student_array[i].element.addClass('bg-danger');
             }
-            if (parseInt(student_array[i].grade) < lowestGrade) {
-                lowestGrade = parseInt(student_array[i].grade);
+            if (Number(student_array[i].grade) < lowestGrade) {
+                lowestGrade = Number(student_array[i].grade);
                 $('.bg-danger').removeClass('bg-danger');
                 student_array[i].element.addClass('bg-danger');
             }
-
         }
-    }
-    else{
-        $('.bg-danger').removeClass('bg-danger');
-        $('.bg-success').removeClass('bg-success');
     }
 }
 
 
 // This function adds the course name to the courseList obj
-function addCourseName(course) {
-    //var courseLowerCase = course.toLowerCase();
-    courseList[course] = 1;
-}
+    function addCourseName(course) {
+        courseList[course] = 1;
+    }
 
 //var timer = null;
 //$("#search").keyup(function(){
@@ -178,6 +172,7 @@ function addCourseName(course) {
                 addStudentToDom(student_array[i]); //loops through the student array and calls addStudentToDom for each student
             }
         }
+        $('.avgGrade').text(calculateAverage());
     }
 
     /**
@@ -306,6 +301,16 @@ function getDataFromServer(){
             var responseData = response.data;
             console.log(responseData);
             for(var i = 0;i < responseData.length;i++){
+                var arrayIndex = student_array.length;
+                responseData[i].element = null;
+                responseData[i].arrayIndex = arrayIndex;
+                console.log(responseData[i].arrayIndex);
+                responseData[i].delete_self =function () {
+                    this.element.remove();
+                    student_array.splice(this.arrayIndex, 1);
+                    changeIndex(this.arrayIndex);
+                    $('.avgGrade').text(calculateAverage());
+                };
                 student_array.push(responseData[i]);
             }
             updateStudentList();
