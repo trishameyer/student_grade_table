@@ -59,7 +59,8 @@ function addStudent() {
         }
     };
     student_array.push(student);
-    addCourseName(student.course);
+    var lowerCaseCourse = student.course.toLowerCase();
+    addCourseName(lowerCaseCourse);
     //checkHighestGrade(student.grade);
 
 }
@@ -312,6 +313,8 @@ function getDataFromServer(){
                     $('.avgGrade').text(calculateAverage());
                 };
                 student_array.push(responseData[i]);
+                var lowerCaseCourse = responseData[i].course.toLowerCase();
+                addCourseName(lowerCaseCourse);
             }
             updateStudentList();
             highlightGrade(student_array);
