@@ -54,6 +54,7 @@ function addStudent() {
             this.element.remove();
             student_array.splice(this.arrayIndex, 1);
             changeIndex(this.arrayIndex);
+
         }
     };
     student_array.push(student);
@@ -198,7 +199,9 @@ function highlightGrade(array) {
         deleteButton.on('click', function () {
             //studentObj.element.remove();
             studentObj.delete_self();
+            highlightGrade(student_array);
             console.log('my element is ', studentObj);
+
         });
         $('tbody').append(studentRow);
         studentRow.append(studentName, studentCourse, studentGrade, deleteButton);
