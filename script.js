@@ -54,6 +54,7 @@ function addStudent() {
             this.element.remove();
             student_array.splice(this.arrayIndex, 1);
             changeIndex(this.arrayIndex);
+            $('.avgGrade').text(calculateAverage());
 
         }
     };
@@ -170,6 +171,7 @@ function highlightGrade(array) {
                 addStudentToDom(student_array[i]); //loops through the student array and calls addStudentToDom for each student
             }
         }
+        $('.avgGrade').text(calculateAverage());
     }
 
     /**
@@ -298,6 +300,16 @@ function getDataFromServer(){
             var responseData = response.data;
             console.log(responseData);
             for(var i = 0;i < responseData.length;i++){
+                var arrayIndex = student_array.length;
+                responseData[i].element = null;
+                responseData[i].arrayIndex = arrayIndex;
+                console.log(responseData[i].arrayIndex);
+                responseData[i].delete_self =function () {
+                    this.element.remove();
+                    student_array.splice(this.arrayIndex, 1);
+                    changeIndex(this.arrayIndex);
+                    $('.avgGrade').text(calculateAverage());
+                };
                 student_array.push(responseData[i]);
             }
             updateStudentList();
