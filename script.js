@@ -8,6 +8,7 @@
 var student_array=[];
 var courseList = {}; //This object is created to store the course names from the student objects
 var courseInput = null;
+var apiKey = 'tc6UZ5oMSi'; //trisha's api_key
 /**
  * inputIds - id's of the elements that are used to add students
  * @type {string[]}
@@ -200,6 +201,8 @@ function highlightGrade(array) {
         });
         deleteButton.on('click', function () {
             //studentObj.element.remove();
+            //console.log('trying to get the id of specific student: ', student_array[20]);
+            deleteStudentRequest(apiKey, studentObj.id); //this needs the id of the student that is getting deleted
             studentObj.delete_self();
             highlightGrade(student_array);
             console.log('my element is ', studentObj);
@@ -293,7 +296,7 @@ function getDataFromServer(){
     $.ajax({
         dataType:'json',
         data:{
-            api_key:'LEARNING'
+            api_key: apiKey //use our own api_key?
         },
         method:'POST',
         url:'http://s-apis.learningfuze.com/sgt/get',
@@ -320,4 +323,30 @@ function getDataFromServer(){
         }
     })
 }
+
+
+/**
+ * deleteStudentRequest function
+ * @params: api_key, student_id
+ * Request deletion of student on the database
+ */
+
+
+function deleteStudentRequest(api_key, student_id){
+    console.log('entered delete student request');
+    $.ajax({
+       dataType: 'json',
+       data: {
+           api_key: api_key,
+           student_id: student_id
+       },
+       method: 'POST',
+       url: 'http://s-apis.learningfuze.com/sgt/delete',
+       success: function(response){
+           console.log('accessed ajax call for student id: ', student_id, response);
+       }
+    });
+    //console.log('failure to access ajax call');
+}
+
 
