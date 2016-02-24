@@ -8,8 +8,9 @@
 var student_array=[];
 var courseList = {}; //This object is created to store the course names from the student objects
 var courseInput = null;
+var apiKey = 'tc6UZ5oMSi'; //trisha's api_key
 var koreyApi = "6SjVcFig5k";
-var trishaApi = "tc6UZ5oMSi";
+
 /**
  * inputIds - id's of the elements that are used to add students
  * @type {string[]}
@@ -63,7 +64,7 @@ function addStudent() {
     student_array.push(student);
     addCourseName(student.course);
     //checkHighestGrade(student.grade);
-    sendDataToServer(trishaApi,student.name,student.course,student.grade);
+    sendDataToServer(apiKey,student.name,student.course,student.grade);
 }
 
 function highlightGrade(array) {
@@ -202,6 +203,8 @@ function highlightGrade(array) {
         });
         deleteButton.on('click', function () {
             //studentObj.element.remove();
+            //console.log('trying to get the id of specific student: ', student_array[20]);
+            deleteStudentRequest(apiKey, studentObj.id); //this needs the id of the student that is getting deleted
             //console.log("id",studentObj.id);
             studentObj.delete_self();
             highlightGrade(student_array);
@@ -295,7 +298,7 @@ function getDataFromServer(){
     $.ajax({
         dataType:'json',
         data:{
-            api_key:'6SjVcFig5k'
+            api_key: apiKey //use our own api_key?
         },
         method:'POST',
         url:'http://s-apis.learningfuze.com/sgt/get',
@@ -323,6 +326,30 @@ function getDataFromServer(){
     })
 }
 
+
+
+/**
+ * deleteStudentRequest function
+ * @params: api_key, student_id
+ * Request deletion of student on the database
+ */
+function deleteStudentRequest(api_key, student_id){
+    $.ajax({
+       dataType: 'json',
+       data: {
+           api_key: api_key,
+           student_id: student_id
+       },
+       method: 'POST',
+       url: 'http://s-apis.learningfuze.com/sgt/delete',
+       success: function(response){
+           console.log('accessed ajax call for student id and response: ', student_id, response);
+       }
+    });
+}
+
+
+
 function sendDataToServer(api_key,studentName,studentCourse,studentGrade){
     $.ajax({
         data:{
@@ -343,3 +370,4 @@ function sendDataToServer(api_key,studentName,studentCourse,studentGrade){
 
     })
 }
+
