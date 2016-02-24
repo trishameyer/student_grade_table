@@ -330,10 +330,7 @@ function getDataFromServer(){
  * @params: api_key, student_id
  * Request deletion of student on the database
  */
-
-
 function deleteStudentRequest(api_key, student_id){
-    console.log('entered delete student request');
     $.ajax({
        dataType: 'json',
        data: {
@@ -346,7 +343,6 @@ function deleteStudentRequest(api_key, student_id){
            console.log('accessed ajax call for student id: ', student_id, response);
        }
     });
-    //console.log('failure to access ajax call');
 }
 
 
