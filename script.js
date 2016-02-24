@@ -340,7 +340,7 @@ function deleteStudentRequest(api_key, student_id){
        method: 'POST',
        url: 'http://s-apis.learningfuze.com/sgt/delete',
        success: function(response){
-           console.log('accessed ajax call for student id: ', student_id, response);
+           console.log('accessed ajax call for student id and response: ', student_id, response);
        }
     });
 }
