@@ -187,7 +187,13 @@ function highlightGrade(array) {
         if (studentObj === undefined) {
             return;
         }
-        var studentRow = $('<tr>');
+        var studentRow = $('<tr>', {
+            'data-container': 'body',
+            'data-toggle': 'popover',
+            'data-placement': 'top',
+            'data-trigger': 'focus',
+            //'data-content': 'Error: you can not delete this student.'
+        });
         var studentName = $('<td>', {
             text: studentObj.name
         });
@@ -204,9 +210,9 @@ function highlightGrade(array) {
         deleteButton.on('click', function () {
             //studentObj.element.remove();
             //console.log('trying to get the id of specific student: ', student_array[20]);
-            deleteStudentRequest(apiKey, studentObj.id); //this needs the id of the student that is getting deleted
+            deleteStudentRequest(studentObj); //this needs the id of the student that is getting deleted
             //console.log("id",studentObj.id);
-            studentObj.delete_self();
+            //studentObj.delete_self();
             highlightGrade(student_array);
             console.log('my element is ', studentObj);
         });
@@ -333,21 +339,30 @@ function getDataFromServer(){
  * @params: api_key, student_id
  * Request deletion of student on the database
  */
-function deleteStudentRequest(api_key, student_id){
+function deleteStudentRequest(studentObj){
+    console.log('student id: ',studentObj.id); //this is undefined until you refresh the page and get data from server again
     $.ajax({
        dataType: 'json',
        data: {
-           api_key: api_key,
-           student_id: student_id
+           api_key: apiKey,
+           student_id: studentObj.id
        },
        method: 'POST',
        url: 'http://s-apis.learningfuze.com/sgt/delete',
        success: function(response){
-           console.log('accessed ajax call for student id and response: ', student_id, response);
-       }
+           if (response.success === true){
+               studentObj.delete_self();
+           } else {
+               studentObj.element.attr('data-content', response.errors[0]).popover('show');
+               //alert(response.errors[0]);
+           }
+           console.log('accessed ajax call for student id and response: ', studentObj.id, response);
+       },
+        error: function(){
+
+        }
     });
 }
-
 
 
 function sendDataToServer(api_key,studentName,studentCourse,studentGrade){
@@ -356,7 +371,7 @@ function sendDataToServer(api_key,studentName,studentCourse,studentGrade){
             api_key:api_key,
             name:studentName,
             course:studentCourse,
-            grade:studentGrade,
+            grade:studentGrade
         },
         method:'POST',
         url:'http://s-apis.learningfuze.com/sgt/create',
@@ -364,8 +379,8 @@ function sendDataToServer(api_key,studentName,studentCourse,studentGrade){
         success: function(response){
             console.log("success",response);
         },
-        error: function(reponse){
-            console.log("error");
+        error: function(response){
+            console.log("error", response);
         }
 
     })
