@@ -294,6 +294,7 @@ function highlightGrade(array) {
         });
     });
 
+
 function getDataFromServer(){
     $.ajax({
         dataType:'json',
@@ -348,7 +349,11 @@ function deleteStudentRequest(api_key, student_id){
     });
 }
 
-
+/**
+ * sendDataToServer function
+ * @params: api_key, studentName, studentCourse, studentGrade
+ * Send created student data to the server
+ */
 
 function sendDataToServer(api_key,studentName,studentCourse,studentGrade){
     $.ajax({
