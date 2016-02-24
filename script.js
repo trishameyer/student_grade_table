@@ -9,6 +9,8 @@ var student_array=[];
 var courseList = {}; //This object is created to store the course names from the student objects
 var courseInput = null;
 var apiKey = 'tc6UZ5oMSi'; //trisha's api_key
+var koreyApi = "6SjVcFig5k";
+
 /**
  * inputIds - id's of the elements that are used to add students
  * @type {string[]}
@@ -62,7 +64,7 @@ function addStudent() {
     student_array.push(student);
     addCourseName(student.course);
     //checkHighestGrade(student.grade);
-
+    sendDataToServer(apiKey,student.name,student.course,student.grade);
 }
 
 function highlightGrade(array) {
@@ -203,10 +205,10 @@ function highlightGrade(array) {
             //studentObj.element.remove();
             //console.log('trying to get the id of specific student: ', student_array[20]);
             deleteStudentRequest(apiKey, studentObj.id); //this needs the id of the student that is getting deleted
+            //console.log("id",studentObj.id);
             studentObj.delete_self();
             highlightGrade(student_array);
             console.log('my element is ', studentObj);
-
         });
         $('tbody').append(studentRow);
         studentRow.append(studentName, studentCourse, studentGrade, deleteButton);
@@ -325,6 +327,7 @@ function getDataFromServer(){
 }
 
 
+
 /**
  * deleteStudentRequest function
  * @params: api_key, student_id
@@ -345,4 +348,26 @@ function deleteStudentRequest(api_key, student_id){
     });
 }
 
+
+
+function sendDataToServer(api_key,studentName,studentCourse,studentGrade){
+    $.ajax({
+        data:{
+            api_key:api_key,
+            name:studentName,
+            course:studentCourse,
+            grade:studentGrade,
+        },
+        method:'POST',
+        url:'http://s-apis.learningfuze.com/sgt/create',
+
+        success: function(response){
+            console.log("success",response);
+        },
+        error: function(reponse){
+            console.log("error");
+        }
+
+    })
+}
 
