@@ -361,13 +361,18 @@ function sendDataToServer(api_key,studentName,studentCourse,studentGrade){
             api_key:api_key,
             name:studentName,
             course:studentCourse,
-            grade:studentGrade,
+            grade:studentGrade
         },
         method:'POST',
         url:'http://s-apis.learningfuze.com/sgt/create',
-
         success: function(response){
+            //getDataFromServer();
             console.log("success",response);
+            var getId ='';
+            for(var i = 25; i <= response.length - 2; i++){
+                getId += response[i];
+            }
+            student_array[student_array.length-1].id = getId;
         },
         error: function(reponse){
             console.log("error");
@@ -375,4 +380,5 @@ function sendDataToServer(api_key,studentName,studentCourse,studentGrade){
 
     })
 }
+
 
