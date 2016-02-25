@@ -389,7 +389,6 @@ function sendDataToServer(api_key,studentName,studentCourse,studentGrade){
         error: function(response){
             console.log("error", response);
         }
-
     })
 }
 
