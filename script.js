@@ -46,14 +46,14 @@ function cancelClicked(){
  * @return undefined
  */
 function addStudent() {
-    var arrayIndex = student_array.length;
+    //var arrayIndex = student_array.length;
     var student = {
         name: $('#studentName').val(),   //creates an object variable with property called name
         course: $('#course').val(),      //property called course
         grade: $('#studentGrade').val(),  //and property called grade
-        arrayIndex: arrayIndex,
+        //arrayIndex: arrayIndex,
         element: null,
-        delete_self: function () {
+        delete_self: function () { //comment out this if we  go with scotts stuff
             this.element.remove();
             student_array.splice(this.arrayIndex, 1);
             changeIndex(this.arrayIndex);
@@ -61,8 +61,8 @@ function addStudent() {
 
         }
     };
-    student_array.push(student);
-    addCourseName(student.course);
+    student_array.push(student); //comment this out if using scotts way
+    addCourseName(student.course); //comment this out if using scotts way
     //checkHighestGrade(student.grade);
     sendDataToServer(apiKey,student.name,student.course,student.grade);
 }
@@ -152,7 +152,7 @@ function highlightGrade(array) {
      */
     function updateData() {
         $('.avgGrade').text(calculateAverage()); //updates .avgGrade text by calling the calculateAverage() function
-        addStudentToDom(student_array[student_array.length - 1]);  //calls updateStudentList()
+        addStudentToDom(student_array[student_array.length - 1]);  //calls updateStudentList() //comment out if using scotts code
     }
 
     /**
@@ -187,7 +187,13 @@ function highlightGrade(array) {
         if (studentObj === undefined) {
             return;
         }
-        var studentRow = $('<tr>');
+        var studentRow = $('<tr>', {
+            'data-container': 'body',
+            'data-toggle': 'popover',
+            'data-placement': 'top',
+            'data-trigger': 'focus'
+            //'data-content': 'Error: you can not delete this student.'
+        });
         var studentName = $('<td>', {
             text: studentObj.name
         });
@@ -202,11 +208,11 @@ function highlightGrade(array) {
             text: "Delete"
         });
         deleteButton.on('click', function () {
-            //studentObj.element.remove();
+            //studentObj.element.remove(); //comment out if using scotts way
             //console.log('trying to get the id of specific student: ', student_array[20]);
-            deleteStudentRequest(apiKey, studentObj.id); //this needs the id of the student that is getting deleted
+            deleteStudentRequest(studentObj); //this needs the id of the student that is getting deleted
             //console.log("id",studentObj.id);
-            studentObj.delete_self();
+            //studentObj.delete_self();
             highlightGrade(student_array);
             console.log('my element is ', studentObj);
         });
@@ -292,7 +298,9 @@ function highlightGrade(array) {
                 checkObjList();
             }, 500);
         });
+        getDataFromServer()
     });
+
 
 function getDataFromServer(){
     $.ajax({
@@ -333,21 +341,36 @@ function getDataFromServer(){
  * @params: api_key, student_id
  * Request deletion of student on the database
  */
-function deleteStudentRequest(api_key, student_id){
+function deleteStudentRequest(studentObj){
+    console.log('student id: ',studentObj.id); //this is undefined until you refresh the page and get data from server again
     $.ajax({
        dataType: 'json',
        data: {
-           api_key: api_key,
-           student_id: student_id
+           api_key: apiKey,
+           student_id: studentObj.id,
+           //'force-failure': 'server' //forces an artificial 500 Internal Server Error
+           //'force-failure': 'timeout(10000)'
        },
        method: 'POST',
        url: 'http://s-apis.learningfuze.com/sgt/delete',
        success: function(response){
-           console.log('accessed ajax call for student id and response: ', student_id, response);
+           if (response.success === true){
+               studentObj.delete_self();
+           } else {
+               studentObj.element.attr('data-content', response.errors[0]).popover('show');
+               //alert(response.errors[0]);
+           }
+           console.log('accessed ajax call for student id and response: ', studentObj.id, response);
        }
     });
 }
 
+
+/**
+ * sendDataToServer function
+ * @params: api_key, studentName, studentCourse, studentGrade
+ * Send created student data to the server
+ */
 
 
 function sendDataToServer(api_key,studentName,studentCourse,studentGrade){
@@ -356,18 +379,23 @@ function sendDataToServer(api_key,studentName,studentCourse,studentGrade){
             api_key:api_key,
             name:studentName,
             course:studentCourse,
-            grade:studentGrade,
+            grade:studentGrade
         },
         method:'POST',
         url:'http://s-apis.learningfuze.com/sgt/create',
-
         success: function(response){
+            //getDataFromServer();
+            var getId ='';
+            for(var i = 25; i <= response.length - 2; i++){
+                getId += response[i];
+            }
+            student_array[student_array.length-1].id = getId;
             console.log("success",response);
         },
-        error: function(reponse){
-            console.log("error");
+        error: function(response){
+            console.log("error", response);
         }
-
     })
 }
+
 
