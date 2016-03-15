@@ -306,10 +306,11 @@ function getDataFromServer(){
     $.ajax({
         dataType:'json',
         data:{
-            api_key: apiKey //use our own api_key?
+            api_key: apiKey, //use our own api_key?
+            operation:'get'
         },
         method:'POST',
-        url:'http://s-apis.learningfuze.com/sgt/get',
+        url:'index.php',
         success: function(response){
             var responseData = response.data;
             console.log(responseData);

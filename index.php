@@ -6,22 +6,26 @@
     else{
         $operation = 'none';
     }
-
-    switch($operation){
+if(!empty($_POST['api_key']) && $_POST['api_key'] == 'tc6UZ5oMSi') {
+    switch ($operation) {
         case 'get':
             //if(!empty($_POST['api_key']) && $_POST['api_key']=='tiggerrocks')
             include('operations/get.php');
             break;
         case 'create':
-            $output = ['success' => false,'errors'=>['invalid entry']];
+            $output = ['success' => false, 'errors' => ['invalid entry']];
             include('operations/create.php');
             break;
+            $output = ['success' => false, 'errors' => ['invalid id']];
+            include('operations/delete.php');
         case 'delete':
             break;
-        case 'update':
-            break;
         default:
-            $output = ['success'=>'false','errors'=>['invalid operation']];
+            $output = ['success' => 'false', 'errors' => ['invalid operation']];
     }
+}
+else{
+    $output = ['success' => 'false', 'errors' => ['invalid key']];
+}
     print(json_encode($output));
 ?>
