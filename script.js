@@ -349,11 +349,12 @@ function deleteStudentRequest(studentObj){
        data: {
            api_key: apiKey,
            student_id: studentObj.id,
+           operation:'delete'
            //'force-failure': 'server' //forces an artificial 500 Internal Server Error
            //'force-failure': 'timeout(10000)'
        },
        method: 'POST',
-       url: 'http://s-apis.learningfuze.com/sgt/delete',
+       url: 'index.php',
        success: function(response){
            if (response.success === true){
                studentObj.delete_self();

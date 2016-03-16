@@ -19,9 +19,12 @@ if(!empty($_POST['api_key']) && $_POST['api_key'] == 'tc6UZ5oMSi') {
             $output = ['success' => false, 'errors' => ['invalid id']];
             include('operations/delete.php');
         case 'delete':
+            $output = ['success' => false, 'errors' => ['id not found']];
+            include('operations/delete.php');
             break;
         default:
             $output = ['success' => 'false', 'errors' => ['invalid operation']];
+
     }
 }
 else{

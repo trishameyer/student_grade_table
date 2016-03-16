@@ -1,7 +1,7 @@
 <?php
     //require_once ('../mysql_connect.php');
-    $ID = 49;
-    $query = "DELETE FROM `Student Table` WHERE `Unique_ID` = $ID";
+    $ID = $_POST['student_id'];
+    $query = "DELETE FROM `Student Table` WHERE `id` = $ID";
     $result = mysqli_query($conn, $query);
     if(mysqli_affected_rows($conn) > 0){
         $output = ['success' => true];
