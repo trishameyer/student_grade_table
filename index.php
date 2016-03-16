@@ -13,7 +13,7 @@ if(!empty($_POST['api_key']) && $_POST['api_key'] == 'tc6UZ5oMSi') {
             include('operations/get.php');
             break;
         case 'create':
-            $output = ['success' => false, 'errors' => ['invalid entry']];
+            //$output = ['success' => false, 'errors' => ['invalid entry']];
             include('operations/create.php');
             break;
             $output = ['success' => false, 'errors' => ['invalid id']];
@@ -28,7 +28,7 @@ if(!empty($_POST['api_key']) && $_POST['api_key'] == 'tc6UZ5oMSi') {
     }
 }
 else{
-    $output = ['success' => 'false', 'errors' => ['invalid key']];
+    $output = ['success' => 'false', 'errors' => ['invalid api_key']];
 }
     print(json_encode($output));
 ?>

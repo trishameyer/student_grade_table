@@ -386,6 +386,7 @@ function sendDataToServer(api_key,studentName,studentCourse,studentGrade){
         },
         method:'POST',
         url:'index.php',
+        dataType:'json',
         success: function(response){
             console.log(response);
             //getDataFromServer();
@@ -393,8 +394,10 @@ function sendDataToServer(api_key,studentName,studentCourse,studentGrade){
             //for(var i = 25; i <= response.length - 2; i++){
             //    getId += response[i];
             //}
-            //student_array[student_array.length-1].id = getId;
-            //console.log("success",response);
+            var getId = response.new_id;
+            console.log("getId:",getId);
+            student_array[student_array.length-1].id = getId;
+            console.log("success",response);
         },
         error: function(response){
             console.log("error", response);
